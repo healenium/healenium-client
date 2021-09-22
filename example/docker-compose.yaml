@@ -8,6 +8,10 @@ services:
       - "5432:5432"
     volumes:
       - ./db/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+     # For unix host
+      - ./data/postgres:/var/lib/postgresql/data
+    # For windows host
+    # - postgres:/var/lib/postgresql/data
     restart: always
     environment:
       - POSTGRES_DB=healenium
@@ -33,3 +37,7 @@ services:
 
 networks:
   healenium:
+
+# Docker volume for Windows host
+#volumes:
+#  postgres:
