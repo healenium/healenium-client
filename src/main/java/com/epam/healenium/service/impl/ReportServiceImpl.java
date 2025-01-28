@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.testcontainers.shaded.org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -30,6 +31,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ReportServiceImpl implements ReportService {
+
+    @Value("${app.baseUrl}")
+    private String baseUrl;
 
     private final ReportRepository reportRepository;
     private final HealingResultRepository resultRepository;
@@ -126,7 +130,8 @@ public class ReportServiceImpl implements ReportService {
     private String transformPath(String sourcePath) {
         try {
             int i = sourcePath.lastIndexOf("screenshots");
-            return sourcePath.substring(i - 1);
+            String imagePath = sourcePath.substring(i - 1);
+            return String.format("%s%s", baseUrl, imagePath);
         } catch (Exception e) {
             log.warn("[Build Report] Error transform sourcePath: {}", sourcePath);
             return sourcePath;

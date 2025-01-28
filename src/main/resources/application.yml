@@ -65,6 +65,7 @@ app:
     allow: ${COLLECT_METRICS:true}
   healing:
     elements: ${FIND_ELEMENTS_AUTO_HEALING:false}
+  baseUrl: ${BASE_URL:/}
 
 cloud:
   aws:
